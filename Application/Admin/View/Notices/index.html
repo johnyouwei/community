@@ -1,0 +1,38 @@
+<extend name="Index/base" />
+<block name="content">
+   <div class="publish"><a href="{:U('Notices/notices')}" class="btn btn-default">发布公告</a></div>
+   <div class="clear"></div>
+   <div class="head"><span>标题</span><span>内容</span><span>时间</span></div>
+   <foreach name="list" item="data">
+       <div>
+           <span>{$data.title}</span>
+           <span>{$data.content}</span>
+           <span>{$data.published_at}</span>
+           <input type="checkbox" name="delete" value="{$data.id}" />
+       </div>
+   </foreach>
+   <div class="delete"><button class="btn btn-danger">删除</button></div>
+</block>
+
+<block name="style">
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        .head span{
+           margin: 30px;
+
+        }
+        div span{
+            margin: 20px;
+        }
+        .publish{
+            margin: 20px;
+            float: right;
+        }
+        .clear{
+            clear: right;
+        }
+        .delete{
+            margin: 20px;
+        }
+    </style>
+</block>

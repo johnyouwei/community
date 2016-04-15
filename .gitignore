@@ -1,0 +1,4 @@
+/Application/Runtime/*
+/ThinkPHP/*
+conf.php
+community.sql
