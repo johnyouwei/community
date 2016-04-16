@@ -2,37 +2,71 @@
 <block name="content">
    <div class="publish"><a href="{:U('Notices/notices')}" class="btn btn-default">发布公告</a></div>
    <div class="clear"></div>
-   <div class="head"><span>标题</span><span>内容</span><span>时间</span></div>
+   <div class="table"><span>标题</span><span>内容</span><span>时间</span></div>
    <foreach name="list" item="data">
-       <div>
+       <div class="table">
            <span>{$data.title}</span>
            <span>{$data.content}</span>
            <span>{$data.published_at}</span>
-           <input type="checkbox" name="delete" value="{$data.id}" />
+           <input type="checkbox" name="notice" value="{$data.id}" />
        </div>
    </foreach>
-   <div class="delete"><button class="btn btn-danger">删除</button></div>
+   <div class="delete"><button id="delete" class="btn btn-danger">删除</button></div>
 </block>
 
 <block name="style">
     <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
-        .head span{
-           margin: 30px;
-
+        .table{
+            margin: 5px 0;
         }
-        div span{
-            margin: 20px;
+        .table span{
+            padding: 5px;
+            margin: 0 60px;
+            
         }
         .publish{
-            margin: 20px;
+            margin-top: 10px;
+            margin-right: 50px;
             float: right;
         }
         .clear{
             clear: right;
         }
         .delete{
-            margin: 20px;
+            margin: 60px;
+            padding: 5px;
         }
     </style>
+</block>
+
+<block name="script">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#delete").click(function(){
+              if(confirm("确定删除?")){
+                var notices = new Array();
+                $("input[name='notice']:checked").each(function(){
+                    notices.push($(this).val());
+                });
+                $.ajax({
+                    url: "delete.html",
+                    data: {
+                        "notices": notices
+                    },
+                    type: "post",
+                    success: function(data){
+                        location.href = "index.html";
+                        console.log(data); 
+                    },
+                    error: function(e){
+                        console.log(e);
+                    }
+                });  
+              }
+              
+            });
+        });
+    </script>
 </block>

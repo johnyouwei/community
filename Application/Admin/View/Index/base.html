@@ -10,52 +10,67 @@
             height: 100%;
         }
         .menu{
-            background-color: #46A3FF;
+            background-color: #000000;
             height: 10%;
+            padding: 20px;
+            opacity: 0.9;
+
+        }
+        .menu span{
+            color: #E0E0E0;
+            font-size: 1.5em;
         }
         .main{
             height: 85%;
         }
         .left{
-            background-color: #84C1FF;
+            background-color: #F0F0F0;
             float: left;
             width: 15%;
             height: 100%;
         }
         .content{
-            position: relative;
-            margin-left: 15%;
+            float: left;
+            width: 85%;
+            height: 100%;
         }
         .footer{
             text-align: center;
             height: 5%;
         }
+        .clear{
+            clear: both;
+        }
         ul{
-            padding-left: 20px;
+            padding-left: 0;
             list-style: none;
         }
         ul li{
-            margin: 20px 0;
+            padding: 20px 30px;
         }
-        a:link{
-            text-decoration: none;
+        ul li:hover{
+            background-color: #E0E0E0;
         }
+        a{
+            text-decoration:none;
+            font-weight: bold;
+        }  
     </style>
 </head>
 <body>
-    <div class="menu">花园小区</div> 
+    <div class="menu"><span>花 园 小 区</span></div> 
     <div class="main">
         <div class="left">
             <ul>
-                <li><a href="#"><span>个人信息</span></a></li>
-                <li><a href="#"><span>住户管理</span></a></li>
-                <li><a href="{:U('Notices/index')}"><span>公告管理</span></a></li>
-                <li><a href="#"><span>处理报修</span></a></li>
+                <li><a href="#"><span>个 人 信 息</span></a></li>
+                <li><a href="#"><span>住 户 管 理</span></a></li>
+                <li><a href="{:U('Notices/index')}"><span>公 告 管 理</span></a></li>
+                <li><a href="#"><span>处 理 报 修</span></a></li>
             </ul>
         </div>
         <div class="content">
             <block name="content"></block>
-        </div>  
+        </div> 
     </div>
     <div class="footer">Copyright &copy; <?php echo date("Y");?> 小区 Powered By Albert Version 1.0.0 </div>
     <block name="style"></block>

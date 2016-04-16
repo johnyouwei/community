@@ -28,4 +28,14 @@ class NoticesController extends Controller {
         $notices->data($data)->add();
         echo "success";
     }
+
+    //删除公告
+    public function delete(){
+        $notices = M('notices');
+        $datas = I('post.notices');
+        foreach ($datas as $data) {
+            $notices->where('id='.$data)->delete();
+        }  
+        $this->ajaxReturn();    
+    }
 }
