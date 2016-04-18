@@ -1,0 +1,103 @@
+<extend name="Index/base" />
+<block name="content">
+    <div class="list">
+        <h3>业主认证申请</h3>
+        <div class="table">
+        <span>姓名</span>
+        <span>楼栋</span>
+        <span>房号</span>
+        <span>状态</span>
+        <span>申请时间</span>
+        </div>
+        <foreach name="list" item="data">
+            <div class="table">
+                <span>{$data.owner_name}</span>
+                <span>{$data.building}</span>
+                <span>{$data.room}</span>
+                <span>{$data.status}</span>
+                <span>{$data.create_time}</span>
+                <input type="checkbox" name="owner" value="{$data.user_id}" />
+            </div>
+        </foreach>
+    </div>
+    <div class="confirm">
+        <button id="allow" class="btn btn-primary">认证通过</button>
+        <button id="deny" class="btn btn-danger">拒绝通过</button>
+    </div>  
+</block>
+
+<block name="style">
+    <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        .list{
+            margin: 30px;
+        }
+        .table{
+            margin: 5px 0;
+        }
+        .table span{
+            padding: 10px;
+            margin: 0 60px; 
+        }
+        .confirm{
+            margin-left: 5%;
+            width: 30%
+
+        }
+        .confirm button{
+            margin: 8%;
+        }
+    </style>
+</block>
+
+<block name="script">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#allow").click(function(){
+              if(confirm("确定通过?")){
+                var owners = new Array();
+                $("input[name='owner']:checked").each(function(){
+                    owners.push($(this).val());
+                });
+                $.ajax({
+                    url: "allow.html",
+                    data: {
+                        "owners": owners
+                    },
+                    type: "post",
+                    success: function(data){
+                        location.href = "index.html";
+                        console.log(data); 
+                    },
+                    error: function(e){
+                        console.log(e);
+                    }
+                });  
+              } 
+            });
+            $("#deny").click(function(){
+              if(confirm("确定拒绝?")){
+                var owners = new Array();
+                $("input[name='owner']:checked").each(function(){
+                    owners.push($(this).val());
+                });
+                $.ajax({
+                    url: "deny.html",
+                    data: {
+                        "owners": owners
+                    },
+                    type: "post",
+                    success: function(data){
+                        location.href = "index.html";
+                        console.log(data); 
+                    },
+                    error: function(e){
+                        console.log(e);
+                    }
+                });  
+              } 
+            });
+        });
+    </script>
+</block>

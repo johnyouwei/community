@@ -4,12 +4,15 @@ use Think\Controller;
 class NoticesController extends Controller {
 
     public function index(){
-        $notices = M('notices');
-        $condition['community_id'] = 1;
-        $condition['admin_id'] = 1;
-        $list = $notices->where($condition)->select();
-        $this->assign('list',$list);
-        $this->display();
+        if(session('?userid')){
+            $notices = M('notices');
+            $condition['admin_id'] = session('userid');
+            $list = $notices->where($condition)->select();
+            $this->assign('list',$list);
+            $this->display();
+        }else{
+            $this->redirect('Index/login');
+        }   
     }
 
     public function notices(){
@@ -22,11 +25,12 @@ class NoticesController extends Controller {
         $data['title'] = I('post.title');
         $data['content'] = I('post.content');
         $data['published_at'] = I('post.time');
-        $data['community_id'] = 1;
-        $data['admin_id'] = 1;
+        $data['community_id'] = session("community_id");
+        $data['admin_id'] = session("userid");
         
-        $notices->data($data)->add();
-        echo "success";
+        $result = $notices->data($data)->add();
+        
+        $this->redirect('Notices/index');
     }
 
     //删除公告

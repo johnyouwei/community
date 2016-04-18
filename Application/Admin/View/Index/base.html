@@ -41,6 +41,9 @@
         .clear{
             clear: both;
         }
+        #logout{
+            float: right;
+        }
         ul{
             padding-left: 0;
             list-style: none;
@@ -58,14 +61,14 @@
     </style>
 </head>
 <body>
-    <div class="menu"><span>花 园 小 区</span></div> 
+    <div class="menu"><span>小区应用管理后台</span><a href="{:U('Index/logout')}" id="logout" class="btn btn-default">退出</a></div> 
     <div class="main">
         <div class="left">
             <ul>
-                <li><a href="#"><span>个 人 信 息</span></a></li>
-                <li><a href="#"><span>住 户 管 理</span></a></li>
+                <li><a href="{:U('Person/index')}"><span>个 人 信 息</span></a></li>
+                <li><a href="{:U('Owner/index')}"><span>住 户 管 理</span></a></li>
                 <li><a href="{:U('Notices/index')}"><span>公 告 管 理</span></a></li>
-                <li><a href="#"><span>处 理 报 修</span></a></li>
+                <li><a href="#"><span>物 业 管 理</span></a></li>
             </ul>
         </div>
         <div class="content">
