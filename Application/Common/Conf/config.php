@@ -11,7 +11,7 @@ return array(
     //路由设置
     'URL_MODEL'       =>  2,
     'URL_ROUTER_ON'   => true,
-    'URL_ROUTE_RULES' => array(
+    'URL_ROUTE_RULES' => array( 
         array('api-v1/notices/:id', 'Api/Notices/getAll', '', array('method'=>'GET')),
     ), 
 );

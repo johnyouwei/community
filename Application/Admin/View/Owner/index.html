@@ -3,20 +3,27 @@
     <div class="list">
         <h3>业主认证申请</h3>
         <div class="table">
-        <span>姓名</span>
-        <span>楼栋</span>
-        <span>房号</span>
-        <span>状态</span>
-        <span>申请时间</span>
+        <div><span>姓名</span></div>
+        <div><span>楼栋</span></div>
+        <div><span>房号</span></div>
+        <div><span>状态</span></div>
+        <div><span>申请时间</span></div>
         </div>
+        <div class="clear"></div>
         <foreach name="list" item="data">
             <div class="table">
-                <span>{$data.owner_name}</span>
-                <span>{$data.building}</span>
-                <span>{$data.room}</span>
-                <span>{$data.status}</span>
-                <span>{$data.create_time}</span>
-                <input type="checkbox" name="owner" value="{$data.user_id}" />
+                <div><span>{$data.owner_name}</span></div>
+                <div><span>{$data.building}</span></div>
+                <div><span>{$data.room}</span></div>
+                <div>
+                <if condition="$data.status == 1">
+                    <span>已认证</span>
+                <else /><span>未认证</span>
+                </if>
+                </div>
+                <div><span>{$data.create_time}</span></div>
+                <div><input type="checkbox" name="owner" value="{$data.user_id}" /></div>
+                <div class="clear"></div>
             </div>
         </foreach>
     </div>
@@ -35,9 +42,9 @@
         .table{
             margin: 5px 0;
         }
-        .table span{
-            padding: 10px;
-            margin: 0 60px; 
+        .table div{
+            float: left;
+            width: 15%;
         }
         .confirm{
             margin-left: 5%;
@@ -46,6 +53,9 @@
         }
         .confirm button{
             margin: 8%;
+        }
+        .clear{
+            clear: both;
         }
     </style>
 </block>

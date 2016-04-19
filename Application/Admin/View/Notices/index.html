@@ -2,28 +2,41 @@
 <block name="content">
    <div class="publish"><a href="{:U('Notices/notices')}" class="btn btn-default">发布公告</a></div>
    <div class="clear"></div>
-   <div class="table"><span>标题</span><span>内容</span><span>时间</span></div>
-   <foreach name="list" item="data">
-       <div class="table">
-           <span>{$data.title}</span>
-           <span>{$data.content}</span>
-           <span>{$data.published_at}</span>
-           <input type="checkbox" name="notice" value="{$data.id}" />
-       </div>
-   </foreach>
-   <div class="delete"><button id="delete" class="btn btn-danger">删除</button></div>
+   <div class="list">
+     <div class="table">
+     <div><span>标题</span></div>
+     <div><span>内容</span></div>
+     <div><span>时间</span></div>
+     <div class="clear"></div>
+     </div>
+     <foreach name="list" item="data">
+         <div class="table">
+             <div><span>{$data.title}</span></div>
+             <div><span>{$data.content}</span></div>
+             <div><span>{$data.published_at}</span></div>
+             <div><input type="checkbox" name="notice" value="{$data.id}" /></div>
+             <div class="clear"></div>
+         </div>
+     </foreach>
+    </div>
+    <div class="clear"></div>
+    <div class="delete"><button id="delete" class="btn btn-danger">删除</button>
+   </div>
 </block>
 
 <block name="style">
     <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
+        .list{
+            margin-top: 10px;
+            margin-left: 30px;
+        }
         .table{
             margin: 5px 0;
         }
-        .table span{
-            padding: 5px;
-            margin: 0 60px;
-            
+        .table div{
+            float: left;
+            width: 20%;
         }
         .publish{
             margin-top: 10px;
@@ -31,11 +44,11 @@
             float: right;
         }
         .clear{
-            clear: right;
+            clear: both;
         }
         .delete{
-            margin: 60px;
-            padding: 5px;
+            margin: 20px auto;
+            padding: 20px;
         }
     </style>
 </block>

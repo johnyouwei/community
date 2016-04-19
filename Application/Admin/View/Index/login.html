@@ -5,35 +5,60 @@
     <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div>
-        <h2>管理员登陆页</h2>
-        <div class="signup"><a href="{:U('signup')}" class="btn btn-default">注册</a></div>
-    </div>
-    <div class="form">          
-        <form action="{:U('loginhandle')}" method="POST">
-            <div><label>用户名:</label><input name="name" type="text"/></div>
-            <div><label>密码:</label><input name="password" type="password"/></div>
-            
-            <div><button type="submit" class="btn btn-default">登陆</button></div>
-        </form>
+    <div class="main">
+    <div class="title"><span>管理员登陆<span></div>
+    <form action="{:U('loginhandle')}" method="POST" class="form">
+        <div><label>用&nbsp户&nbsp名</label><input name="name" type="text"/></div>
+        <div><label>密&nbsp&nbsp&nbsp&nbsp码</label><input name="password" type="password"/></div>
+        <div><button type="submit" class="btn btn-success">登陆</button></div>
+        <span>还没账号? 去注册 --></span><a href="{:U('signup')}"><span>注&nbsp册</span></a>
+    </form>
     </div>
 </body>
 <style type="text/css">
     html,body{
         margin: 0;
-        padding: 0;
-        height: 100%;
+        height: 100%;   
         width: 100%
+    }
+    body{
+        background-color: #ECECFF;
+        padding-top: 80px;
     }
     .signup{
         margin: 10px;
-        float: right;
+        font-size: large;
     }
-    .form{
-        margin: 5% auto;
-        width: 30%;
-        height: 80%;
+
+    .main{
+        margin: 0 auto;
+        width: 420px;
+        height: 300px;
+        background-color: #CECEFF;
+        opacity: 0.9;
     }
+
+    .title{
+        margin: 0;
+        padding:10px;
+        height: 50px;
+        background-color: #2894FF;
+        color: #FFFFFF;
+        opacity: 0.8;
+        font-size: large;
+    }
+    form{
+        padding: 30px;
+    }
+
+    form label{
+        width: 60px;
+    }
+
+    form span{
+        margin: 5px;
+    }
+
     div{
         margin:20px;
     }
