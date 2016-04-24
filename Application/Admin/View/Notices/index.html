@@ -1,26 +1,27 @@
 <extend name="Index/base" />
 <block name="content">
-   <div class="publish"><a href="{:U('Notices/notices')}" class="btn btn-default">发布公告</a></div>
+   <div class="publish"><a href="{:U('Notices/notices')}" class="btn btn-primary">发布公告</a></div>
    <div class="clear"></div>
    <div class="list">
-     <div class="table">
-     <div><span>标题</span></div>
-     <div><span>内容</span></div>
-     <div><span>时间</span></div>
-     <div class="clear"></div>
-     </div>
-     <foreach name="list" item="data">
-         <div class="table">
-             <div><span>{$data.title}</span></div>
-             <div><span>{$data.content}</span></div>
-             <div><span>{$data.published_at}</span></div>
-             <div><input type="checkbox" name="notice" value="{$data.id}" /></div>
-             <div class="clear"></div>
-         </div>
-     </foreach>
-    </div>
-    <div class="clear"></div>
+    <table class="table">
+        <caption>已发布公告</caption>
+        <tr class="active">
+            <th>标题</th>
+            <th>内容</th>
+            <th>发布时间</th>
+            <th>选项</th>
+        </tr>
+        <foreach name="list" item="data">
+            <tr>
+                <td>{$data.title}</td>
+                <td>{$data.content}</td>
+                <td>{$data.published_at}</td>
+                <td><input type="checkbox" name="notice" value="{$data.id}" /></td>
+            </tr>
+        </foreach>
+    </table>
     <div class="delete"><button id="delete" class="btn btn-danger">删除</button>
+   </div>
    </div>
 </block>
 
@@ -28,15 +29,7 @@
     <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
         .list{
-            margin-top: 10px;
-            margin-left: 30px;
-        }
-        .table{
-            margin: 5px 0;
-        }
-        .table div{
-            float: left;
-            width: 20%;
+            margin: 10px 30px ;  
         }
         .publish{
             margin-top: 10px;
@@ -48,7 +41,6 @@
         }
         .delete{
             margin: 20px auto;
-            padding: 20px;
         }
     </style>
 </block>

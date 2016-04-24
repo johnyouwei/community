@@ -1,14 +1,12 @@
 <?php
 namespace Admin\Controller;
-use Think\Controller;
-class IndexController extends Controller {
+use Common\Controller\BaseController;
+
+class IndexController extends BaseController {
 
     public function index(){
-        if(session('?userid')){
-            $this->redirect('Person/index');
-        }else{
-            $this->redirect("login");
-        } 
+        $this->getLogin();
+        $this->redirect('Person/index');    
     }
     //注册
     public function signup(){
@@ -27,6 +25,7 @@ class IndexController extends Controller {
             $c_data['name'] = I('post.community_name');
             $c_data['address'] = I('post.community_address');
             $c_data['create_time'] = date('Y-m-d');
+
             $community_id = $community->data($c_data)->add();
 
             $data['name'] = I('post.name');
@@ -68,5 +67,10 @@ class IndexController extends Controller {
     public function logout(){
         session(null);
         $this->redirect("login");
+    }
+
+    public function test(){
+        $data = I('post.name');
+        $this->ajaxReturn($data);
     }
 }

@@ -1,22 +1,22 @@
 <extend name="Index/base" />
 <block name="content">
-    <div class="person">
-        <div><span>ID:</span><span>{$data.id}</span></div>
-        <div><span>姓名:</span><span>{$data.name}</span></div>
-        <div><span>手机号:</span><span>{$data.phone}</span></div>
-        <div><span>邮箱:</span><span>{$data.email}</span></div>
-        <div><span>注册时间:</span><span>{$data.create_time}</span></div>
-    </div>
+<div class="info">
+    <table class="table">
+        <caption>个人资料</caption>
+        <tr><th>ID</th><td>{$data.id}</td></tr>
+        <tr><th>姓名</th><td>{$data.name}</td></tr>
+        <tr><th>手机号</th><td>{$data.phone}</td></tr>
+        <tr><th>邮箱</th><td>{$data.email}</td></tr>
+        <tr><th>注册时间</th><td>{$data.create_time}</td></tr>    
+    </table>
+</div>  
 </block>
 
 <block name="style">
     <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/bootstrap.min.css">
     <style type="text/css">
-        .person{
-            margin: 30px;
-        }
-        .person div{
-            padding: 5px;
+        .info{
+            margin: 30px 300px 20px 60px;
         }
     </style>
 </block>

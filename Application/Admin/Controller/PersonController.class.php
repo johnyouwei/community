@@ -1,8 +1,8 @@
 <?php
 namespace Admin\Controller;
-use Think\Controller;
+use Common\Controller\BaseController;
 
-class PersonController extends Controller{
+class PersonController extends BaseController{
     //展示管理员个人信息
     public function index(){
         $admin_id = session("userid");

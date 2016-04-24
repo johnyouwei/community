@@ -61,8 +61,10 @@
         a{
             text-decoration:none;
             font-weight: bold;
-        }  
+        } 
     </style>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript"></script>
 </head>
 <body>
     <div class="menu"><span>小区应用管理后台</span><a href="{:U('Index/logout')}" id="logout" class="btn btn-default">退出</a></div> 
@@ -72,15 +74,18 @@
                 <li><a href="{:U('Person/index')}"><span>个 人 信 息</span></a></li>
                 <li><a href="{:U('Owner/index')}"><span>住 户 管 理</span></a></li>
                 <li><a href="{:U('Notices/index')}"><span>公 告 管 理</span></a></li>
-                <li><a href="#"><span>物 业 管 理</span></a></li>
+                <li><a href="{:U('Property/index')}"><span>物 业 管 理</span></a></li>
             </ul>
         </div>
         <div class="content">
             <block name="content"></block>
         </div> 
     </div>
-    <div class="footer">Copyright &copy; <?php echo date("Y");?> 小区 Powered By Albert Version 1.0.0 </div>
-    <block name="style"></block>
-    <block name="script"></block>   
+    <div class="footer">Copyright &copy; 2012-<?php echo date("Y");?> 小区 Powered By Albert Version 1.0.0 </div>
+    <block name="style">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/bootstrap.min.css" />
+    </block>
+    <block name="script">
+    </block>   
 </body>
 </html>

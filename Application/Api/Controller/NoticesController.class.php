@@ -3,20 +3,19 @@ namespace Api\Controller;
 use Think\Controller;
 
 class NoticesController extends Controller{
-    //获取某小区所有公告
-    function getAll($id){
+    //获取某小区指定数目公告
+    function get(){
         $Notices = M('Notices');
-        $condition['community_id'] = $id;
-        $data = $Notices->where($condition)->select();
-        
-        //判空
-        if(!empty($data)){
-            $result['data'] = $data;
-            $result['status'] = 1;
-            $this->ajaxReturn($result);
+        $condition['community_id'] = I("get.id");
+        $page = I("get.page");
+        $limit = I("get.limit");
+        $field = 'title,content,published_at';
+        $result = $Notices->where($condition)->limit($limit)->page($page)->order('published_at desc')->field($field)->select();
+      
+        if(!empty($result)){
+            $this->ajaxReturn(json_success($result, 200, '查询成功'));    
         }else{
-            $result['status'] = 0;
-            $this->ajaxReturn($result);
+            $this->ajaxReturn(json_error(201, '没有更多数据了'));
         }    
     }
 }

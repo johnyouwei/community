@@ -1,8 +1,8 @@
 <?php
 namespace Admin\Controller;
-use Think\Controller;
+use Common\Controller\BaseController;
 
-class OwnerController extends Controller
+class OwnerController extends BaseController
 {
     public function index(){
         $owner = D('Owner');

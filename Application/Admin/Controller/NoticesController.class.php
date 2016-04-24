@@ -1,13 +1,14 @@
 <?php
 namespace Admin\Controller;
-use Think\Controller;
-class NoticesController extends Controller {
+use Common\Controller\BaseController;
+
+class NoticesController extends BaseController {
 
     public function index(){
         if(session('?userid')){
             $notices = M('notices');
             $condition['admin_id'] = session('userid');
-            $list = $notices->where($condition)->select();
+            $list = $notices->where($condition)->order('published_at desc')->select();
             $this->assign('list',$list);
             $this->display();
         }else{

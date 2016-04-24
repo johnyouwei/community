@@ -6,36 +6,44 @@
 </head>
 <body>
     <div class="main">
-    <div class="title"><span>管理员登陆<span></div>
-    <form action="{:U('loginhandle')}" method="POST" class="form">
-        <div><label>用&nbsp户&nbsp名</label><input name="name" type="text"/></div>
-        <div><label>密&nbsp&nbsp&nbsp&nbsp码</label><input name="password" type="password"/></div>
-        <div><button type="submit" class="btn btn-success">登陆</button></div>
-        <span>还没账号? 去注册 --></span><a href="{:U('signup')}"><span>注&nbsp册</span></a>
-    </form>
+        <form action="{:U('loginhandle')}" method="POST" class="form">
+            <table class="table">
+                <caption><h4>管理员登陆</h4></caption>
+                <tr><th>用户名</th><td><input id="name" name="name" type="text"/></td></tr>
+                <tr><th>密码</th><td><input id="password" name="password" type="password"/></td></tr>
+                <tr><th>记住我</th><td><input type="checkbox"></td></tr>
+                <tr><td colspan="2" class="login"><button id="login" type="submit" class="btn btn-primary b">登陆</button></td></tr>
+                <tr><td colspan="2" class="signup"><span>还没账号?</span>
+                <a href="{:U('signup')}"><span>注册</span></a></td></tr>
+            </table>
+        </form>  
     </div>
-</body>
-<style type="text/css">
+    <style type="text/css">
     html,body{
         margin: 0;
         height: 100%;   
         width: 100%
     }
     body{
-        background-color: #ECECFF;
+        background-color: #272727;
         padding-top: 80px;
+        opacity: 0.9;
+    }
+    .login{
+        text-align: center;
     }
     .signup{
-        margin: 10px;
-        font-size: large;
+        padding: 8px 20px;
+    }
+    button{
+        width: 90%;
     }
 
     .main{
         margin: 0 auto;
         width: 420px;
         height: 300px;
-        background-color: #CECEFF;
-        opacity: 0.9;
+        background-color: #F0F0F0;
     }
 
     .title{
@@ -47,8 +55,16 @@
         opacity: 0.8;
         font-size: large;
     }
-    form{
-        padding: 30px;
+    
+    table tr th{
+        text-align: center;
+    }
+
+    form caption{
+        padding: 8px;
+        color: #FFFFFF;
+        background-color: #000000;
+        opacity: 0.9;  
     }
 
     form label{
@@ -62,6 +78,8 @@
     div{
         margin:20px;
     }
-   
+
 </style>
+<script type="text/javascript" src="__PUBLIC__/js/jquery-1.12.3.min.js"></script>
+</body>
 </html>

@@ -1,0 +1,40 @@
+<extend name="Index/base" />
+<block name="content">
+<div class="list">
+    <table class="table">
+        <caption>物业报修记录</caption>
+        <tr>
+            <th>报修内容</th>
+            <th>报修人</th>
+            <th>报修时间</th>
+            <th>楼栋号</th>
+            <th>房号</th>
+            <th>状态</th>
+            <th>选项</th>
+        </tr>
+        <foreach name="list" item="data">
+        <tr>
+            <td>{$data.content}</td>
+            <td>{$data.user_id}</td>
+            <td>{$data.time}</td>
+            <td>{$data.building}</td>
+            <td>{$data.room}</td>
+            <if condition="$data.status == 1">
+                <td style="color: darkgreen">已处理</td>
+            <else /><td style="color: darkred">未处理</td>
+            </if>
+            <td><input type="checkbox" name="owner" value="{$data.user_id}" /></td>
+        </tr>   
+        </foreach>
+    </table>
+</div>
+</block>
+
+<block name="style">
+<link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        .list{
+            margin: 30px;
+        }
+    </style>
+</block>

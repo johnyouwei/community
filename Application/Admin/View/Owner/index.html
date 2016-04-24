@@ -1,36 +1,35 @@
 <extend name="Index/base" />
 <block name="content">
     <div class="list">
-        <h3>业主认证申请</h3>
-        <div class="table">
-        <div><span>姓名</span></div>
-        <div><span>楼栋</span></div>
-        <div><span>房号</span></div>
-        <div><span>状态</span></div>
-        <div><span>申请时间</span></div>
-        </div>
-        <div class="clear"></div>
-        <foreach name="list" item="data">
-            <div class="table">
-                <div><span>{$data.owner_name}</span></div>
-                <div><span>{$data.building}</span></div>
-                <div><span>{$data.room}</span></div>
-                <div>
-                <if condition="$data.status == 1">
-                    <span>已认证</span>
-                <else /><span>未认证</span>
-                </if>
-                </div>
-                <div><span>{$data.create_time}</span></div>
-                <div><input type="checkbox" name="owner" value="{$data.user_id}" /></div>
-                <div class="clear"></div>
-            </div>
-        </foreach>
-    </div>
+    <table class="table"> 
+        <caption><h4>业主认证申请</h4></caption>
+        <tr class="active">
+          <th>姓名</th>
+          <th>楼号</th>
+          <th>房号</th>
+          <th>申请时间</th>
+          <th>状态</th>
+          <th>选项</th>
+        </tr>
+    <foreach name="list" item="data">
+        <tr>
+            <td>{$data.owner_name}</td>
+            <td>{$data.building}</td>
+            <td>{$data.room}</td>
+            <td>{$data.create_time}</td>
+            <if condition="$data.status == 1">
+                <td style="color: darkgreen">已认证</td>
+            <else /><td style="color: darkred">未认证</td>
+            </if>
+            <td><input type="checkbox" name="owner" value="{$data.user_id}" /></td>
+        </tr>
+    </foreach> 
+    </table>
     <div class="confirm">
         <button id="allow" class="btn btn-primary">认证通过</button>
         <button id="deny" class="btn btn-danger">拒绝通过</button>
-    </div>  
+    </div>
+  
 </block>
 
 <block name="style">
@@ -47,12 +46,12 @@
             width: 15%;
         }
         .confirm{
-            margin-left: 5%;
-            width: 30%
+            margin: 0 auto;
+            width: 60%
 
         }
         .confirm button{
-            margin: 8%;
+            margin: 20px 80px;
         }
         .clear{
             clear: both;

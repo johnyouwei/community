@@ -6,42 +6,51 @@
 </head>
 <body>
     <div class="main">
-    <div class="title"><span>管理员注册<span></div>
-        <form action="{:U('signuphandle')}" method="POST">
-            <div><span class="nessary">&#8727;</span><label>小区名字</label><input name="community_name" type="text"/></div>
-            <div><span class="nessary">&#8727;</span><label>小区地址</label><input name="community_address" type="text"/></div>
-            <div><span class="nessary">&#8727;</span><label>用户名</label><input name="name" type="text"/></div>
-            <div><span class="nessary">&#8727;</span><label>密码</label><input name="password" type="password"/></div>
-            <div><span class="nessary">&#8727;</span><label>确认密码</label><input name="re_password"type="password"/></div>
-            <div><span class="nessary">&#8727;</span><label>邮箱</label><input name="email" type="text"/></div>
-            <div><span>&#8722;</span><label>手机</label><input name="phone" type="text"/></div>
-            <div><span>&#8722;</span><label>性别</label>
-            <span>男</span><input type="radio" name="gender" checked="checked" value="1">
-            <span>女</span><input type="radio" name="gender" value="0"> 
-            </div>
-            <div><button type="submit" class="btn btn-success">立 即 注 册</button><span>已有账号?马上登陆--></span><a href="{:U('login')}"><span>登 陆</span></a></div>
+        <form action="{:U('signuphandle')}" method="POST" class="form">
+            <table class="table">
+                <caption><h4>管理员注册</h4></caption>
+                <tr><th>小区名字</th><td><input name="community_name" type="text"/></td></tr>
+                <tr><th>小区地址</th><td><input name="community_address" type="text"/></td></tr>
+                <tr><th>用户名</th><td><input name="name" type="text"/></td></tr>
+                <tr><th>密码</th><td><input name="password" type="password"/></td></tr>
+                <tr><th>确认密码</th><td><input name="re_password"type="password"/></td></tr>
+                <tr><th>邮箱</th><td><input name="email" type="text"/></td></tr>
+                <tr><th>手机</th><td><input name="phone" type="text"/></td></tr>
+                <tr><td colspan="2" id="login"><button type="submit" class="btn btn-primary b">注册</button></td></tr>
+                <tr><td colspan="2" id="signup"><span>已有账号?</span>
+        <a href="{:U('login')}"><span>登陆</span></a></td></tr>
+            </table>
         </form>
-
-    </div>    
+    </div> 
 </body>
 <style type="text/css">
     html,body{
         margin: 0;
-        padding: 0;
-        height: 100%;
+        height: 100%;   
         width: 100%
     }
     body{
+        background-color: #272727;
         padding-top: 80px;
-        background-color: #ECECFF;
-    }
-    .main{
-        margin: 0 auto;
-        width: 500px;
-        height: 520px;
-        background-color: #CECEFF;
         opacity: 0.9;
     }
+    #login{
+        text-align: center;
+    }
+    #signup{
+        padding: 8px 20px;
+    }
+    button{
+        width: 90%;
+    }
+
+    .main{
+        margin: 0 auto;
+        width: 420px;
+        height: 450px;
+        background-color: #F0F0F0;
+    }
+
     .title{
         margin: 0;
         padding:10px;
@@ -51,27 +60,28 @@
         opacity: 0.8;
         font-size: large;
     }
-    .login{
-        margin: 10px;
-        float: right;
+    
+    table tr th{
+        text-align: center;
     }
-    .nessary{
-        color: red;
+
+    form caption{
+        padding: 8px;
+        color: #FFFFFF;
+        background-color: #000000;
+        opacity: 0.9;  
     }
-    .form{
-        margin: 5% auto;
-        width: 30%;
-        height: 80%;
-    }
+
     form label{
-        width: 100px;
+        width: 60px;
     }
+
     form span{
-        margin: 10px;
+        margin: 5px;
     }
+
     div{
         margin:20px;
     }
-   
 </style>
 </html>
