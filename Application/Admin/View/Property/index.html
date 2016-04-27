@@ -3,7 +3,7 @@
 <div class="list">
     <table class="table">
         <caption>物业报修记录</caption>
-        <tr>
+        <tr class="active">
             <th>报修内容</th>
             <th>报修人</th>
             <th>报修时间</th>
@@ -15,18 +15,21 @@
         <foreach name="list" item="data">
         <tr>
             <td>{$data.content}</td>
-            <td>{$data.user_id}</td>
-            <td>{$data.time}</td>
+            <td>{$data.name}</td>
+            <td>{$data.create_time}</td>
             <td>{$data.building}</td>
             <td>{$data.room}</td>
             <if condition="$data.status == 1">
                 <td style="color: darkgreen">已处理</td>
             <else /><td style="color: darkred">未处理</td>
             </if>
-            <td><input type="checkbox" name="owner" value="{$data.user_id}" /></td>
+            <td><input type="checkbox" name="repair" value="{$data.user_id}" /></td>
         </tr>   
         </foreach>
     </table>
+    <div>
+        <button id="finish" class="btn btn-primary">完成</button>
+    </div>
 </div>
 </block>
 
@@ -37,4 +40,34 @@
             margin: 30px;
         }
     </style>
+</block>
+
+<block name="script">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#finish").click(function(){
+              if(confirm("确定?")){
+                var repairs = new Array();
+                $("input[name='repair']:checked").each(function(){
+                    repairs.push($(this).val());
+                });
+                $.ajax({
+                    url: "finish.html",
+                    data: {
+                        "repairs": repairs
+                    },
+                    type: "post",
+                    success: function(data){
+                        location.href = "index.html";
+                        console.log(data); 
+                    },
+                    error: function(e){
+                        console.log(e);
+                    }
+                });  
+              } 
+            });
+        });
+    </script>
 </block>

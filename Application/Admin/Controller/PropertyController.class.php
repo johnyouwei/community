@@ -8,8 +8,19 @@ class PropertyController extends BaseController
         $this->getLogin();
         $condition['community_id'] = session("community_id");
         $property = D("repair");
-        $list = $property->where($condition)->order('time desc')->select();
+        $list = $property->where($condition)->order('status,create_time desc')->select();
         $this->assign('list', $list);
         $this->display();
     }
+
+    //确认维修完成
+    public function finish(){
+        $repairIds = I('post.repairs');
+        $repair = D('repair');
+        foreach ($repairIds as $repairId) {
+            $data['status'] = 1;
+            $repair->where('user_id='.$repairId)->save($data);
+        }
+    }
+
 }

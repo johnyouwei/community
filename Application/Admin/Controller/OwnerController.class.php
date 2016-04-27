@@ -7,7 +7,7 @@ class OwnerController extends BaseController
     public function index(){
         $owner = D('Owner');
         $condition['community_id'] = session('community_id');
-        $list = $owner->where($condition)->order('create_time desc')->select();  
+        $list = $owner->where($condition)->order('status,create_time desc')->select();  
         $this->assign('list',$list);
         $this->display();    
     }

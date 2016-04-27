@@ -62,8 +62,14 @@ class UserController extends BasicController{
 
     //获取指定id用户信息
     public function getUserInfo(){
+        $this->checkAuth();
         $parameters = array('id');
         $this->checkParameters($parameters, 'get');
+
+        //查询的用户id要和userid一致,即用户只能查询自己的信息
+        if(I('get.id') != I('get.userid')){
+            $this->ajaxReturn(json_error(400, '没有权限'));
+        }
 
         $user = D('User');
         $condition['id'] = I('get.id');
@@ -86,16 +92,25 @@ class UserController extends BasicController{
 
     //更新指定用户id的用户信息
     public function update(){
-          
+        $this->checkAuth();
         $parameters = array('id');
         $this->checkParameters($parameters, 'get');
 
-        
+        //查询的用户id要和userid一致,即用户只能查询自己的信息
+        if(I('get.id') != I('get.userid')){
+            $this->ajaxReturn(json_error(400, '没有权限'));
+        }
+
         $user = D('User');
         $condition['id'] = I('get.id');
 
         $data = I('put.');
-        
+        unset($data['id']);
+        unset($data['username']);
+        unset($data['password']);
+        unset($data['token']);
+        unset($data['create_time']);
+
         $result = $user->where($condition)->data($data)->save();
 
         if($result){
@@ -114,8 +129,60 @@ class UserController extends BasicController{
 
     public function delete(){
 
-        parse_str(file_get_contents("php://input"), $delete);
         
-        $this->ajaxReturn($delete);
+    }
+
+    //认证成为业主
+    public function beOwner(){
+        $this->checkAuth();
+        $parameters = array('community_id', 'name','building', 'room');
+        $this->checkParameters($parameters, 'post');
+
+        $data['community_id'] = I("post.community_id");
+        $data['user_id'] = I('get.userid');
+
+        $owner = D('Owner');
+        $result = $owner->where($data)->find();
+        if($result){
+            if($result['status'] == 1){
+                $this->ajaxReturn(json_error(200, '认证通过,无需再次认证'));
+            }else{
+                $this->ajaxReturn(json_error(201, '已提交认证申请,请等待管理员认证'));
+            } 
+        }
+        $data['name'] = I('post.name');
+        $data['building'] = I('post.building');
+        $data['room'] = I('post.room'); 
+        $data['create_time'] = date("Y-m-d H:i:s");  
+
+        $result = $owner->data($data)->add(); 
+        if($result){
+            unset($data);
+            $data['status'] = 0;
+            $this->ajaxReturn(json_success($data, 200, '提交成功,等待认证'));
+        }else{
+           $this->ajaxReturn(json_error(400, '提交失败')); 
+        }
+    }
+    //获取某用户已认证的小区
+    public function getOwners(){
+        $this->checkAuth();
+        $parameters = array('id'); //用户id
+        $this->checkParameters($parameters, 'get');
+
+        //查询的用户id要和userid一致,即用户只能查询自己的信息
+        if(I('get.id') != I('get.userid')){
+            $this->ajaxReturn(json_error(400, '没有权限'));
+        }
+
+        $owner = D("Owner");
+        $condition['user_id'] = I('get.id');
+        $condition['status'] = 1;
+        $result = $owner->where($condition)->field('community_id')->select();
+        if($result){
+            $this->ajaxReturn(json_success($result, 200, '获取成功'));
+        }else{
+            $this->ajaxReturn(json_error(400, '没有已认证的小区'));
+        }
     }
 }
