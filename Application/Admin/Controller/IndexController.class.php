@@ -33,7 +33,7 @@ class IndexController extends BaseController {
             $data['email'] = I('post.email');
             $data['phone'] = I('post.phone');
             $data['community_id'] = $community_id;
-            $data['create_time'] = date('Y-m-d');
+            $data['create_time'] = date('Y-m-d H:i:s');
 
             $admin->data($data)->add();
             $this->redirect('login');

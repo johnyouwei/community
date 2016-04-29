@@ -4,6 +4,7 @@
     <table class="table">
         <caption>物业报修记录</caption>
         <tr class="active">
+            <th>关键词</th>
             <th>报修内容</th>
             <th>报修人</th>
             <th>报修时间</th>
@@ -14,6 +15,7 @@
         </tr>
         <foreach name="list" item="data">
         <tr>
+            <td>{$data.keys}</td>
             <td>{$data.content}</td>
             <td>{$data.name}</td>
             <td>{$data.create_time}</td>
@@ -23,12 +25,13 @@
                 <td style="color: darkgreen">已处理</td>
             <else /><td style="color: darkred">未处理</td>
             </if>
-            <td><input type="checkbox" name="repair" value="{$data.user_id}" /></td>
+            <td><input type="checkbox" name="repair" value="{$data.id}" /></td>
         </tr>   
         </foreach>
     </table>
-    <div>
+    <div class="confirm">
         <button id="finish" class="btn btn-primary">完成</button>
+        <button id="delete" class="btn btn-danger">删除</button>
     </div>
 </div>
 </block>
@@ -38,6 +41,13 @@
     <style type="text/css">
         .list{
             margin: 30px;
+        }
+        .confirm{
+            margin: 0 auto;
+            width: 60%
+        }
+        .confirm button{
+            margin: 20px 80px;
         }
     </style>
 </block>
@@ -54,6 +64,28 @@
                 });
                 $.ajax({
                     url: "finish.html",
+                    data: {
+                        "repairs": repairs
+                    },
+                    type: "post",
+                    success: function(data){
+                        location.href = "index.html";
+                        console.log(data); 
+                    },
+                    error: function(e){
+                        console.log(e);
+                    }
+                });  
+              } 
+            });
+            $("#delete").click(function(){
+              if(confirm("确定删除?")){
+                var repairs = new Array();
+                $("input[name='repair']:checked").each(function(){
+                    repairs.push($(this).val());
+                });
+                $.ajax({
+                    url: "delete.html",
                     data: {
                         "repairs": repairs
                     },

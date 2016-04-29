@@ -46,7 +46,7 @@ class UserController extends BasicController{
         $result = $user->where($condition)->find();
 
         if($result != null){
-            $token['token'] = get_token();
+            $token = get_token();
             //token写入用户表
             $userid['id'] = $result['id'];
             $user->where($userid)->data($token)->save();
@@ -68,7 +68,7 @@ class UserController extends BasicController{
 
         //查询的用户id要和userid一致,即用户只能查询自己的信息
         if(I('get.id') != I('get.userid')){
-            $this->ajaxReturn(json_error(400, '没有权限'));
+            $this->ajaxReturn(json_error(401, '没有权限'));
         }
 
         $user = D('User');
@@ -76,17 +76,11 @@ class UserController extends BasicController{
         $result = $user->where($condition)->find();
 
         if($result != null){
-            $data = array(
-                "username" => $result['username'],
-                "email" => $result['email'],
-                "gender" => $result['gender'],
-                "email" => $result['email'],
-                "phone" => $result['phone']
-            );
-            $this->ajaxReturn(json_success($data, 200, '成功获取'));
+            unset($result['password']);
+            unset($result['token']);
+            $this->ajaxReturn(json_success($result, 200, '成功获取'));
         }else{
-            
-            $this->ajaxReturn(json_error(400, '用户不存在'));
+            $this->ajaxReturn(json_error(400, '查询失败'));
         }
     }
 
@@ -126,22 +120,43 @@ class UserController extends BasicController{
             $this->ajaxReturn(json_error(201, '数据没有变化'));
         }
     }
+    //修改密码
+    public function updatePassword(){
+        $this->checkAuth();
+        $parameters = array('oldPassword', 'newPassword');
+        $this->checkParameters($parameters, 'put');
 
-    public function delete(){
-
-        
+        $user = D('user');
+        $condition['id'] = I('get.userid');
+        $condition['password'] = I('put.oldPassword');
+        $result = $user->where($condition)->find();
+        if($result){
+            $data['password'] = I('put.newPassword');
+            $data['token'] = null;
+            $user->where('id='.I('get.userid'))->data($data)->save();
+            $this->ajaxReturn(json_success(null, 200, '修改成功'));
+        }else{
+            $this->ajaxReturn(json_error(400, '原密码不正确'));
+        }
     }
 
     //认证成为业主
     public function beOwner(){
         $this->checkAuth();
-        $parameters = array('community_id', 'name','building', 'room');
+        $parameters = array('community_id', 'building', 'room', 'name');
         $this->checkParameters($parameters, 'post');
 
         $data['community_id'] = I("post.community_id");
         $data['user_id'] = I('get.userid');
 
+        $community = D('community');
+        $result = $community->where('id='.I("post.community_id"))->find();
+        
+        if(!$result){
+            $this->ajaxReturn(json_error(401, '请求的小区不存在'));
+        }
         $owner = D('Owner');
+        unset($result);
         $result = $owner->where($data)->find();
         if($result){
             if($result['status'] == 1){
@@ -165,20 +180,18 @@ class UserController extends BasicController{
         }
     }
     //获取某用户已认证的小区
-    public function getOwners(){
+    public function getCommunitys(){
         $this->checkAuth();
         $parameters = array('id'); //用户id
         $this->checkParameters($parameters, 'get');
 
         //查询的用户id要和userid一致,即用户只能查询自己的信息
         if(I('get.id') != I('get.userid')){
-            $this->ajaxReturn(json_error(400, '没有权限'));
+            $this->ajaxReturn(json_error(401, '没有权限'));
         }
 
-        $owner = D("Owner");
-        $condition['user_id'] = I('get.id');
-        $condition['status'] = 1;
-        $result = $owner->where($condition)->field('community_id')->select();
+        $community = D('community');
+        $result = $community->join('cn_owner ON cn_community.id = cn_owner.community_id AND cn_owner.status = 1')->field('id,community_name')->select();
         if($result){
             $this->ajaxReturn(json_success($result, 200, '获取成功'));
         }else{

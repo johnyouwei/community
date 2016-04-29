@@ -26,7 +26,7 @@ class BasicController extends RestController{
         $userid = I('get.userid');
         $token = I('get.token');
         if($userid == null || $token == null){
-            $this->ajaxReturn(json_error(400, '缺少userid或token'));
+            $this->ajaxReturn(json_error(1001, '缺少userid或token'));
         }
         $user = D('user');
         $condition['id'] = $userid;
@@ -35,7 +35,7 @@ class BasicController extends RestController{
         if ($result) {
             return $this;
         }else{
-            $this->ajaxReturn(json_error(401, '用户不存在或token过期,请重新登录'));
+            $this->ajaxReturn(json_error(1002, '用户不存在或token过期,请重新登录'));
         }  
     }
 
@@ -47,10 +47,10 @@ class BasicController extends RestController{
         $result = $owner->where($condition)->field('status')->find();
         
         if($result['status'] == null){
-            $this->ajaxReturn(json_error(400, '不是该社区的认证业主,无权限操作'));
-        }
+            $this->ajaxReturn(json_error(4001, '不是该社区的认证业主,无权限操作'));
+        }   
         if($result['status'] == 0){
-            $this->ajaxReturn(json_error(401, '业主身份认证中,无权限操作'));
+            $this->ajaxReturn(json_error(4002, '业主身份认证中,无权限操作'));
         }
         //是认证业主
         return $this;

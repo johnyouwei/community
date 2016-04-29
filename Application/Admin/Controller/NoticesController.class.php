@@ -25,7 +25,7 @@ class NoticesController extends BaseController {
         $notices = M('notices');
         $data['title'] = I('post.title');
         $data['content'] = I('post.content');
-        $data['published_at'] = I('post.time');
+        $data['published_at'] = date("Y-m-d H:i:s");
         $data['community_id'] = session("community_id");
         $data['admin_id'] = session("userid");
         

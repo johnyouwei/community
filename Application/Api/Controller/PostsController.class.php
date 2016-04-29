@@ -25,7 +25,8 @@ class PostsController extends BasicController{
         $post = D('post');
         $result = $post->data($data)->add();
         if($result){
-            $this->ajaxReturn(json_success($data , 200, '发帖成功'));
+            $result = $post->where('id='.$result)->find();
+            $this->ajaxReturn(json_success($result , 200, '发帖成功'));
         }else{
             $this->ajaxReturn(json_error(400, '发帖失败'));
         } 
@@ -36,6 +37,7 @@ class PostsController extends BasicController{
         $this->checkAuth();
         parse_str(file_get_contents("php://input"), $delete);
         $post = D('post');
+
         $data['id'] = $delete['id'];
         $data['user_id'] = I('get.userid');
 
@@ -66,8 +68,7 @@ class PostsController extends BasicController{
         $condition['community_id'] = I("get.community_id");
         $page = I("get.page");
         $limit = I("get.limit");
-        $field = 'id,title,username,published_at';
-        $result = $post->where($condition)->limit($limit)->page($page)->order('published_at desc')->field($field)->select();
+        $result = $post->where($condition)->limit($limit)->page($page)->order('published_at desc')->select();
       
         if(!empty($result)){
             $this->ajaxReturn(json_success($result, 200, '查询成功'));    
@@ -79,10 +80,11 @@ class PostsController extends BasicController{
     //获取指定id帖子
     public function getOne(){
         $this->checkAuth();
-        $parameters = array('id');
+        $parameters = array('id', 'community_id');
         $this->checkParameters($parameters, 'get');
 
         $condition['id'] = I('get.id');
+        $condition['community_id'] = I('get.community_id');
 
         $post = D('post');
         $result = $post->where($condition)->find();
@@ -90,8 +92,6 @@ class PostsController extends BasicController{
         if($result){
             //是否是该社区的成员,查询认证表
             $this->checkOwner(I('get.userid'), $result['community_id']);
-            unset($result['community_id']);
-            unset($result['user_id']);
             $this->ajaxReturn(json_success($result, 200, '获取成功'));
         }else{
             $this->ajaxReturn(json_error(400, '帖子不存在'));
@@ -104,15 +104,22 @@ class PostsController extends BasicController{
         $parameters = array('content', 'post_id');
         $this->checkParameters($parameters, 'post');
 
+        $condition['id'] = I('post.post_id');
+        $post = D('post');
+        $result = $post->where($condition)->find();
+        if(!$result){
+            $this->ajaxReturn(json_error(401, '帖子已删除'));   
+        }
         //是否是该社区的成员,查询认证表
-        $this->checkOwner(I('get.userid'), I('post.community_id'));
-
+        $this->checkOwner(I('get.userid'), $result['community_id']);  
+        
         $data['content'] = I('post.content');
         $data['post_id'] = I('post.post_id');
         $data['user_id'] = I('get.userid');
         $data['reply_time'] = date('Y-m-d H:i:s');
 
         $user = D('user');
+        unset($result);
         $result = $user->where('id='.I('get.userid'))->field('username')->find();
         $data['username'] = $result['username'];
         
@@ -120,7 +127,8 @@ class PostsController extends BasicController{
         $result = $reply->data($data)->add();
         
         if($result){
-            $this->ajaxReturn(json_success($data , 200, '回帖成功'));
+            $data = $reply->where('id='.$result)->field()->find();
+            $this->ajaxReturn(json_success($data, 200, '回帖成功'));
         }else{
             $this->ajaxReturn(json_error(400, '回帖失败'));
         }

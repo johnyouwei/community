@@ -12,12 +12,9 @@
         <textarea id="content" name="content" form="notice" rows="10" cols="50"></textarea>
     </div>
     <div>
-        <label>发布时间</label><input name="time" type="date"/>
-        <button id="publish" type="submit" class="btn btn-success">发布</button>
+        <button id="publish" type="button" class="btn btn-success">发布</button>
     </div>  
 </form>
-
-
 </block>
 <block name="style">
     <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
@@ -39,4 +36,18 @@
     </style>
 </block>
 <block name="script">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.12.3.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#publish").click(function(){
+                var title = $("#title").val();
+                var content = $("#content").val();
+                if(title == "" || content == ""){
+                    alert("标题和内容不能为空");
+                }else{
+                    $("#notice").submit();
+                }
+            });
+        });
+    </script>
 </block> 
