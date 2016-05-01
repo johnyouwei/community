@@ -22,9 +22,9 @@ class IndexController extends BaseController {
         if($result){
             $this->redirect("signup");
         }else{
-            $c_data['name'] = I('post.community_name');
+            $c_data['community_name'] = I('post.community_name');
             $c_data['address'] = I('post.community_address');
-            $c_data['create_time'] = date('Y-m-d');
+            $c_data['create_time'] = date('Y-m-d H:i:s');
 
             $community_id = $community->data($c_data)->add();
 

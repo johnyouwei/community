@@ -1,4 +1,4 @@
 /Application/Runtime/*
 /ThinkPHP/*
-conf.php
+/Application/Common/Conf/config.php
 community.sql

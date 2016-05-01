@@ -21,6 +21,7 @@ return array(
         array('api-v1/users/owners', 'Api/User/beOwner', '', array('method'=>'POST')),
         //用户登陆
         array('api-v1/users/login', 'Api/User/login', '', array('method'=>'POST')),
+        array('api-v1/users/logout', 'Api/User/logout', '', array('method'=>'GET')),
         //获取用户已验证的所有小区
         array('api-v1/users/:id/communitys', 'Api/User/getCommunitys', '', array('method'=>'GET')),
         //获取指定id的用户信息

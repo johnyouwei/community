@@ -49,15 +49,28 @@ class UserController extends BasicController{
             $token = get_token();
             //token写入用户表
             $userid['id'] = $result['id'];
-            $user->where($userid)->data($token)->save();
-            $data['userid'] = $result['id'];
             $data['token'] = $token;
+            $user->where($userid)->data($data)->save();
+            $data['userid'] = $result['id'];
             
             $this->ajaxReturn(json_success($data, 200, '登陆成功'));
         }else{
 
             $this->ajaxReturn(json_error(400, '用户名或密码错误'));
         }  
+    }
+
+    //注销账号(退出登录)
+    public function logout(){
+        $this->checkAuth();
+        $user = D('user');
+        $data['token'] = null;
+        $result = $user->where('id='.I('get.userid'))->data($data)->save();
+        if($result){
+            $this->ajaxReturn(json_success($data, 200, '账号注销成功'));
+        }else{
+            $this->ajaxReturn(json_success($data, 400, '账号注销失败'));
+        }
     }
 
     //获取指定id用户信息

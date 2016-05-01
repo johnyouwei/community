@@ -8,7 +8,7 @@ class NoticesController extends BaseController {
         if(session('?userid')){
             $notices = M('notices');
             $condition['admin_id'] = session('userid');
-            $list = $notices->where($condition)->order('published_at desc')->select();
+            $list = $notices->where($condition)->order('id desc')->select();
             $this->assign('list',$list);
             $this->display();
         }else{
@@ -25,10 +25,13 @@ class NoticesController extends BaseController {
         $notices = M('notices');
         $data['title'] = I('post.title');
         $data['content'] = I('post.content');
-        $data['published_at'] = date("Y-m-d H:i:s");
+        $data['published_at'] = date('Y-m-d');
         $data['community_id'] = session("community_id");
         $data['admin_id'] = session("userid");
-        
+        $admin = D('admin');
+        $result = $admin->where('id='.$data['admin_id'])->field('name')->find();
+        $data['admin_name'] = $result['name'];
+        unset($result);
         $result = $notices->data($data)->add();
         
         $this->redirect('Notices/index');
@@ -42,5 +45,13 @@ class NoticesController extends BaseController {
             $notices->where('id='.$data)->delete();
         }  
         $this->ajaxReturn();    
+    }
+
+    public function getOne(){
+        $notice = D('notices');
+        $id = I('get.id');
+        $result = $notice->where('id='.$id)->find();
+        $this->assign("result", $result);
+        $this->display('one');
     }
 }

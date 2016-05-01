@@ -15,4 +15,19 @@ class IndexController extends BasicController {
             $this->ajaxReturn(json_error(201, '没有更多数据了'));
         }   
     }
+
+    public function checkCommunity(){
+        $parameters = array("name");
+        $this->checkParameters($parameters, 'post');
+        $community = D('community');
+        $condition ['community_name'] = I('post.name');
+        $result = $community->where($condition)->find();
+        if($result){
+            $data['status'] = 1;
+            $this->ajaxReturn(json_success($data, 200, '小区存在'));
+        }else{
+             $data['status'] = 0;
+             $this->ajaxReturn(json_success($data, 400, '小区不存在'));
+         }
+    }
 }
