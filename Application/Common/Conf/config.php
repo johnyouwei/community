@@ -1,12 +1,5 @@
 <?php
-return array(
-	//数据库设置
-    'DB_TYPE'   => 'mysql',
-    'DB_NAME'   => 'community',
-    'DB_USER'   => 'root',
-    'DB_PWD'    => '',
-    'DB_HOST'   => 'localhost',
-    'DB_PREFIX' => 'cn_',
+$conf =  array(
 
     //路由设置
     'URL_MODEL'       =>  2,
@@ -55,3 +48,5 @@ return array(
         //////////////////////////////////////////////////////
     ), 
 );
+
+return array_merge(require './config.php',$conf);
